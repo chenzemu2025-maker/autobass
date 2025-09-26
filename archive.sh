@@ -25,3 +25,21 @@ if [[ ! -d "$SOURCE" ]]; then
     echo "Error: Source directory does not exist: $SOURCE"
     exit 1
 fi
+
+TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+NEW_FOLDER="$TARGET/backup_$TIMESTAMP"
+mkdir -p "$NEW_FOLDER"  # -p make sure even if parent is not exist, it will be created together 
+
+echo "Created: $NEW_FOLDER"
+
+cp -a "$SOURCE"/. "$NEW_FOLDER"/ 2>/dev/null
+
+if [[ $? -ne 0 ]]; then
+    echo "Error: Copy failed."
+    exit 1
+fi
+
+echo "Backup completed!"
+echo "Copied from: $SOURCE"
+echo "To          : $NEW_FOLDER"
+exit 0
