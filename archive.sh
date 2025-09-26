@@ -4,9 +4,24 @@ show_help() {
     echo "  -h, --help    Show this help message"
 }
 
-# help 开关
+# help 
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then
     show_help
     exit 0
 fi
-24dbde9 (Add basic script skeleton and --help/-h option)
+
+# Two argument
+if [[ $# -ne 2 ]]; then
+    echo "Error: You must provide a source and a target directory."
+    show_help
+    exit 1
+fi
+
+SOURCE=$1
+TARGET=$2
+
+# Source dirction must exist
+if [[ ! -d "$SOURCE" ]]; then
+    echo "Error: Source directory does not exist: $SOURCE"
+    exit 1
+fi
