@@ -1,7 +1,6 @@
 # autobass
-## This is a project wrote by Keqian Chen
+## This is a project wrote by Keqian Chen 117585825 
 CSE 337 assignment 1
-# autobass
 
 ## Overview
 A minimal Bash backup script.  
