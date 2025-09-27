@@ -33,7 +33,7 @@ SOURCE=$1
 TARGET=$2
 log_info "archive script started."
 
-# ========== source/target check ==========
+# ======== source/target check ========
 if [[ ! -d "$SOURCE" || ! -r "$SOURCE" ]]; then
     log_error "Source directory ($SOURCE) does not exist or is not readable. Exiting."
     exit 2
