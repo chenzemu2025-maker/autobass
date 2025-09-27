@@ -1,3 +1,15 @@
+#!/bin/bash
+# archive.sh - with compression + logging
+
+# ========== log tool ==========
+_now() { date +"%Y-%m-%d %H:%M:%S"; }
+
+LOG_FILE="$(cd "$(dirname "$0")" && pwd)/archive.log"
+
+log_info()  { local m="INFO: [$(_now)] $*";  echo "$m";      echo "$m" >> "$LOG_FILE"; }
+log_error() { local m="ERROR: [$(_now)] $*"; echo "$m" 1>&2; echo "$m" >> "$LOG_FILE"; }
+
+# ========== enter check ==========
 show_help() {
     echo "Usage: $0 [source_directory] [target_directory]"
     echo "Options:"
