@@ -31,27 +31,29 @@ fi
 
 SOURCE=$1
 TARGET=$2
+log_info "archive script started."
 
-# Source dirction must exist
-if [[ ! -d "$SOURCE" ]]; then
-    echo "Error: Source directory does not exist: $SOURCE"
-    exit 1
+# ========== source/target check ==========
+if [[ ! -d "$SOURCE" || ! -r "$SOURCE" ]]; then
+    log_error "Source directory ($SOURCE) does not exist or is not readable. Exiting."
+    exit 2
 fi
 
+if [[ ! -d "$TARGET" ]]; then
+    if ! mkdir -p "$TARGET" 2>/dev/null; then
+        log_error "Target directory ($TARGET) does not exist or could not be created. Exiting."
+        exit 3
+    fi
+fi
+
+# ========== Compressed archiving ==========
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
-NEW_FOLDER="$TARGET/backup_$TIMESTAMP"
-mkdir -p "$NEW_FOLDER"  # -p make sure even if parent is not exist, it will be created together 
+ARCHIVE_PATH="$TARGET/backup_${TIMESTAMP}.tar.gz"
+log_info "Backing up from $SOURCE to $ARCHIVE_PATH"
 
-echo "Created: $NEW_FOLDER"
-
-cp -a "$SOURCE"/. "$NEW_FOLDER"/ 2>/dev/null
-
-if [[ $? -ne 0 ]]; then
-    echo "Error: Copy failed."
-    exit 1
+if tar -czf "$ARCHIVE_PATH" -C "$SOURCE" . >>"$LOG_FILE" 2>&1; then
+    log_info "Backup completed successfully."
+else
+    log_error "Backup failed during compression."
+    exit 4
 fi
-
-echo "Backup completed!"
-echo "Copied from: $SOURCE"
-echo "To          : $NEW_FOLDER"
-exit 0
