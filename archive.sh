@@ -80,7 +80,7 @@ fi
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 ARCHIVE_PATH="$TARGET/backup_${TIMESTAMP}.tar.gz"
 
-Simulation: Compress the output and throw it to devnull; Enter the details of -v into logSimulation: Compress the output and throw it to devnull; Enter the details of -v into loglog_info "Backing up from $SOURCE to $ARCHIVE_PATH"
+#Simulation: Compress the output and throw it to devnull; Enter the details of -v into logSimulation: Compress the output and throw it to devnull; Enter the details of -v into loglog_info "Backing up from $SOURCE to $ARCHIVE_PATH"
 
 if [[ $DRY_RUN -eq 1 ]]; then
   log_info "Dry-run enabled. Simulating backup."
